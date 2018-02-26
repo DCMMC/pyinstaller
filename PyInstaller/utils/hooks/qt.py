@@ -180,8 +180,12 @@ def qt5_qml_dir(namespace):
         raise Exception('Invalid namespace: {0}'.format(namespace))
 
     if namespace == 'PyQt5':
-        import PyQt5
-        qmldir = os.path.join(PyQt5.__path__[0], 'Qt', 'qml')
+        # import PyQt5
+        # qmldir = os.path.join(PyQt5.__path__[0], 'Qt', 'qml')
+        # new approach to local qml path
+        # @since 3.5
+        import subprocess
+        qmldir = str(run(['qmake', '-query', 'QT_INSTALL_QML']))
         if os.path.isdir(qmldir):
             return qmldir
 
